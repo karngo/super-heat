@@ -8,14 +8,12 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-left">Name</th>
+                    <th>Managers</th>
+                    <th v-for="(indexParameter, i) in indexParameters" :key="i">
+                      {{ indexParameter }}
+                    </th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td class="pa-2">Name 1</td>
-                  </tr>
-                </tbody>
               </template>
             </v-simple-table>
           </v-card-text>
@@ -25,7 +23,11 @@
   </v-container>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "HeatMap",
+  computed: {
+    ...mapGetters(["indexParameters"]),
+  },
 };
 </script>
