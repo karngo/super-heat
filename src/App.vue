@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <h2>Super Heat</h2>
+      <h2 class="text-center">Super Heat</h2>
       <HeatMap />
     </v-main>
   </v-app>
