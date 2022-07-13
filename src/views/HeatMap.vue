@@ -16,6 +16,7 @@
                       @change="selectedTopic = ''"
                       outlined
                       dense
+                      clearable
                       prepend-inner-icon="mdi-bullseye"
                     ></v-select>
                   </v-col>
@@ -28,6 +29,7 @@
                       :disabled="!selectedIndex"
                       outlined
                       dense
+                      clearable
                     ></v-select>
                   </v-col>
                 </v-row>
