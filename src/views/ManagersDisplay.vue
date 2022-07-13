@@ -95,7 +95,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-  name: "HeatMap",
+  name: "ManagersDisplay",
   data() {
     return {
       selectedIndex: "",
