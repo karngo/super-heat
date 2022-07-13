@@ -62,34 +62,9 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "getParameters",
-      "managers",
-      "indexScores",
-      "getTopicParameters",
-      "getTopicScores",
-      "getSubTopics",
-      "getSubTopicScores",
-    ]),
+    ...mapGetters(["getParameters", "getParameterScores", "managers"]),
     indexParameters() {
       return this.getParameters();
-    },
-    managerIndexScores() {
-      const managerScores = this.managers.map((manager) => {
-        const scores = this.indexParameters.map((indexParamter) => {
-          const scoreData = this.indexScores.find(
-            (indexScore) =>
-              indexScore.manager == manager &&
-              indexScore.parameter == indexParamter
-          );
-
-          return scoreData?.score || 0;
-        });
-
-        return scores;
-      });
-
-      return managerScores;
     },
     scoreParameters() {
       if (!this.selectedIndex) {
@@ -104,55 +79,14 @@ export default {
     },
     managerScores() {
       if (!this.selectedIndex) {
-        return this.managerIndexScores;
+        return this.getManagerScores(this.indexParameters);
       }
 
       if (!this.selectedTopic) {
-        return this.managerTopicScores;
+        return this.getManagerScores(this.topicParameters);
       }
 
-      return this.managerSubTopicScores;
-    },
-    managerTopicScores() {
-      const topicScores = this.getTopicScores(this.selectedIndex);
-
-      const managerTopicScores = this.managers.map((manager) => {
-        const scores = this.scoreParameters.map((scoreParameter) => {
-          const scoreData = topicScores.find(
-            (topicScore) =>
-              topicScore.manager == manager &&
-              topicScore.parameter == scoreParameter
-          );
-
-          return scoreData?.score || 0;
-        });
-
-        return scores;
-      });
-
-      return managerTopicScores;
-    },
-    managerSubTopicScores() {
-      const subTopicScores = this.getSubTopicScores(
-        this.selectedIndex,
-        this.selectedTopic
-      );
-
-      const managerSubTopicScores = this.managers.map((manager) => {
-        const scores = this.scoreParameters.map((scoreParameter) => {
-          const scoreData = subTopicScores.find(
-            (subTopicScore) =>
-              subTopicScore.manager == manager &&
-              subTopicScore.parameter == scoreParameter
-          );
-
-          return scoreData?.score || 0;
-        });
-
-        return scores;
-      });
-
-      return managerSubTopicScores;
+      return this.getManagerScores(this.subTopicParameters);
     },
     topicParameters() {
       if (!this.selectedIndex) {
@@ -168,6 +102,33 @@ export default {
       }
 
       return this.getSubTopics(this.selectedIndex, this.selectedTopic);
+    },
+  },
+  methods: {
+    getTopicParameters(indexParameter) {
+      return this.getParameters(indexParameter);
+    },
+    getSubTopics(indexParameter, topicParameter) {
+      return this.getParameters(indexParameter, topicParameter);
+    },
+    getManagerScores(parameters) {
+      const parameterScores = this.getParameterScores(parameters);
+
+      const managerScores = this.managers.map((manager) => {
+        const scores = parameters.map((parameter) => {
+          const scoreData = parameterScores.find(
+            (parameterScore) =>
+              parameterScore.manager == manager &&
+              parameterScore.parameter == parameter
+          );
+
+          return scoreData?.score || 0;
+        });
+
+        return scores;
+      });
+
+      return managerScores;
     },
   },
 };

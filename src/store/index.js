@@ -37,54 +37,31 @@ export default new Vuex.Store({
 
       return subTopics;
     },
-    indexParameters(state, getters) {
-      return getters.getParameters();
-    },
-    indexScores(state, getters) {
-      const indexParameters = getters.indexParameters;
+    getParameterScores: (state) => (parameters) => {
       const statData = state?.managerStats?.data || [];
 
-      if (!Array.isArray(statData) || !indexParameters.length) {
+      if (!Array.isArray(statData)) {
         return [];
       }
 
-      return statData.filter(({ parameter }) =>
-        indexParameters.includes(parameter)
+      if (Array.isArray(parameters)) {
+        const scores = statData.filter(({ parameter }) =>
+          parameters.includes(parameter)
+        );
+
+        return scores;
+      }
+
+      const scores = statData.filter(
+        ({ parameter }) => parameters == parameter
       );
+
+      return scores;
     },
     managers(state, getters) {
-      const scores = getters.indexScores;
+      const indexParameters = getters.getParameters();
+      const scores = getters.getParameterScores(indexParameters);
       return uniq(scores.map(({ manager }) => manager));
-    },
-    getTopicParameters: (state, getters) => (indexParameter) => {
-      return getters.getParameters(indexParameter);
-    },
-    getSubTopics: (state, getters) => (indexParameter, topicParameter) => {
-      return getters.getParameters(indexParameter, topicParameter);
-    },
-    getTopicScores: (state, getters) => (indexParamter) => {
-      if (!getters.indexParameters.includes(indexParamter)) {
-        return [];
-      }
-
-      const topics = getters.getTopicParameters(indexParamter);
-      const statData = state?.managerStats?.data || [];
-
-      if (!Array.isArray(statData)) {
-        return [];
-      }
-
-      return statData.filter(({ parameter }) => topics.includes(parameter));
-    },
-    getSubTopicScores: (state, getters) => (indexParameter, topicParameter) => {
-      const subTopics = getters.getSubTopics(indexParameter, topicParameter);
-      const statData = state?.managerStats?.data || [];
-
-      if (!Array.isArray(statData)) {
-        return [];
-      }
-
-      return statData.filter(({ parameter }) => subTopics.includes(parameter));
     },
   },
   mutations: {},
