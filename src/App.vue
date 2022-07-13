@@ -1,7 +1,9 @@
 <template>
   <v-app>
+    <v-toolbar-title class="text-center py-4 font-weight-medium primary--text">
+      Super Heat
+    </v-toolbar-title>
     <v-main>
-      <h2 class="text-center">Super Heat</h2>
       <ManagersDisplay />
     </v-main>
   </v-app>
