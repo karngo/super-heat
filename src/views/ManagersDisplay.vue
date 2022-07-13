@@ -40,51 +40,12 @@
                 </v-row>
               </v-container>
             </v-card-title>
-            <v-simple-table class="heatmap">
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-center">
-                      <v-icon dense>mdi-account</v-icon>
-                      Managers
-                    </th>
-                    <th
-                      v-for="(scoreParameter, i) in scoreParameters"
-                      :key="i"
-                      class="text-center"
-                    >
-                      {{ scoreParameter }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(manager, mIndex) in managers" :key="mIndex">
-                    <td>
-                      <v-card outlined class="text-center grey darken-3">
-                        <v-card-text class="py-1 white--text">
-                          {{ manager }}
-                        </v-card-text>
-                      </v-card>
-                    </td>
-                    <td
-                      v-for="(score, sIndex) in managerScores[mIndex]"
-                      :key="sIndex"
-                      class="px-1"
-                    >
-                      <v-card
-                        outlined
-                        class="text-center"
-                        :color="getHeatColor(score)"
-                      >
-                        <v-card-text class="pa-1">
-                          {{ score }}
-                        </v-card-text>
-                      </v-card>
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
+            <HeatMap
+              :yAxis="{ title: 'Managers', icon: 'mdi-bullseye' }"
+              :yValues="managers"
+              :xValues="scoreParameters"
+              :tableData="managerScores"
+            />
           </v-card-text>
         </v-card>
       </v-col>
@@ -93,9 +54,12 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-
+import HeatMap from "../components/HeatMap.vue";
 export default {
   name: "ManagersDisplay",
+  components: {
+    HeatMap,
+  },
   data() {
     return {
       selectedIndex: "",
@@ -165,18 +129,6 @@ export default {
 
       return managerScores;
     },
-    getHeatColor(score) {
-      if (score * 1 < 2) return "error";
-      if (score * 1 < 4) return "warning";
-      return "success";
-    },
   },
 };
 </script>
-<style lang="scss" scoped>
-.heatmap ::v-deep {
-  tbody tr td:first-child {
-    width: 20%;
-  }
-}
-</style>
