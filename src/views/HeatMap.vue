@@ -20,7 +20,7 @@
                 :disabled="!selectedIndex"
               ></v-select>
             </v-card-title>
-            <v-simple-table>
+            <v-simple-table class="heatmap">
               <template v-slot:default>
                 <thead>
                   <tr>
@@ -150,3 +150,10 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.heatmap ::v-deep {
+  tbody tr td:first-child {
+    width: 20%;
+  }
+}
+</style>
