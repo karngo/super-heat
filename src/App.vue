@@ -9,14 +9,17 @@
 
 <script>
 import HeatMap from "./views/HeatMap.vue";
-
+import { mapActions } from "vuex";
 export default {
   name: "App",
   components: {
     HeatMap,
   },
-  data: () => ({
-    //
-  }),
+  mounted() {
+    this.fetchManagerStats();
+  },
+  methods: {
+    ...mapActions(["fetchManagerStats"]),
+  },
 };
 </script>

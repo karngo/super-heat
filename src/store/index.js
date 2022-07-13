@@ -1,13 +1,13 @@
-import { uniq } from "lodash";
+import { isPlainObject, uniq } from "lodash";
 import Vue from "vue";
 import Vuex from "vuex";
-import data from "../data";
+import { fetchManagerStats } from "./api";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    managerStats: data,
+    managerStats: {},
   },
   getters: {
     getParameters: (state) => (indexParameter, topicParameter) => {
@@ -64,7 +64,17 @@ export default new Vuex.Store({
       return uniq(scores.map(({ manager }) => manager));
     },
   },
-  mutations: {},
-  actions: {},
-  modules: {},
+  mutations: {
+    updateManagerStats(state, stats) {
+      state.managerStats = stats;
+    },
+  },
+  actions: {
+    async fetchManagerStats({ commit }) {
+      const stats = await fetchManagerStats();
+      if (isPlainObject(stats)) {
+        commit("updateManagerStats", stats);
+      }
+    },
+  },
 });
