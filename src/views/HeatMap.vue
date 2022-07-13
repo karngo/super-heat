@@ -93,7 +93,7 @@ export default {
         return [];
       }
 
-      const topicParameters = this.getTopicParameters(this.selectedIndex);
+      const topicParameters = this.getParameters(this.selectedIndex);
       return topicParameters;
     },
     subTopicParameters() {
@@ -101,16 +101,10 @@ export default {
         return [];
       }
 
-      return this.getSubTopics(this.selectedIndex, this.selectedTopic);
+      return this.getParameters(this.selectedIndex, this.selectedTopic);
     },
   },
   methods: {
-    getTopicParameters(indexParameter) {
-      return this.getParameters(indexParameter);
-    },
-    getSubTopics(indexParameter, topicParameter) {
-      return this.getParameters(indexParameter, topicParameter);
-    },
     getManagerScores(parameters) {
       const parameterScores = this.getParameterScores(parameters);
 
