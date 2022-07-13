@@ -10,16 +10,35 @@ export default new Vuex.Store({
     managerStats: data,
   },
   getters: {
-    indexParameters(state) {
+    getParameters: (state) => (indexParameter, topicParameter) => {
       const statDefinitions = state?.managerStats?.definitions || [];
 
       if (!Array.isArray(statDefinitions)) {
         return [];
       }
 
-      const indices = uniq(statDefinitions.map(({ index }) => index));
+      if (!indexParameter) {
+        const indices = uniq(statDefinitions.map(({ index }) => index));
+        return indices;
+      }
 
-      return indices;
+      if (!topicParameter) {
+        const topics = statDefinitions
+          .filter(({ index }) => index == indexParameter)
+          .map(({ topic }) => topic);
+
+        return topics;
+      }
+
+      const subTopics = statDefinitions
+        .filter(({ index }) => index == indexParameter)
+        .filter(({ topic }) => topic == topicParameter)
+        .map(({ subTopic }) => subTopic);
+
+      return subTopics;
+    },
+    indexParameters(state, getters) {
+      return getters.getParameters();
     },
     indexScores(state, getters) {
       const indexParameters = getters.indexParameters;
@@ -38,44 +57,10 @@ export default new Vuex.Store({
       return uniq(scores.map(({ manager }) => manager));
     },
     getTopicParameters: (state, getters) => (indexParameter) => {
-      if (!getters.indexParameters.includes(indexParameter)) {
-        return [];
-      }
-
-      const statDefinitions = state?.managerStats?.definitions || [];
-
-      if (!Array.isArray(statDefinitions)) {
-        return [];
-      }
-
-      const topics = statDefinitions
-        .filter(({ index }) => index == indexParameter)
-        .map(({ topic }) => topic);
-
-      return topics;
+      return getters.getParameters(indexParameter);
     },
     getSubTopics: (state, getters) => (indexParameter, topicParameter) => {
-      const topics = getters.getTopicParameters(indexParameter);
-      if (!topics.length) {
-        return [];
-      }
-
-      if (!topics.includes(topicParameter)) {
-        return [];
-      }
-
-      const statDefinitions = state?.managerStats?.definitions || [];
-
-      if (!Array.isArray(statDefinitions)) {
-        return [];
-      }
-
-      const subTopics = statDefinitions
-        .filter(({ index }) => index == indexParameter)
-        .filter(({ topic }) => topic == topicParameter)
-        .map(({ subTopic }) => subTopic);
-
-      return subTopics;
+      return getters.getParameters(indexParameter, topicParameter);
     },
     getTopicScores: (state, getters) => (indexParamter) => {
       if (!getters.indexParameters.includes(indexParamter)) {

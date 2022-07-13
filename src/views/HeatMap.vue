@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "indexParameters",
+      "getParameters",
       "managers",
       "indexScores",
       "getTopicParameters",
@@ -71,6 +71,9 @@ export default {
       "getSubTopics",
       "getSubTopicScores",
     ]),
+    indexParameters() {
+      return this.getParameters();
+    },
     managerIndexScores() {
       const managerScores = this.managers.map((manager) => {
         const scores = this.indexParameters.map((indexParamter) => {
