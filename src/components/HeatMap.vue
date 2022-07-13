@@ -8,8 +8,8 @@
             {{ yAxis.title }}
           </th>
           <th
-            v-for="(xValue, yIndex) in xValues"
-            :key="yIndex"
+            v-for="(xValue, xIndex) in xValues"
+            :key="xIndex"
             class="text-center"
           >
             {{ xValue }}
@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(yValue, xIndex) in yValues" :key="xIndex">
+        <tr v-for="(yValue, yIndex) in yValues" :key="yIndex">
           <td>
             <v-card outlined class="text-center grey darken-3">
               <v-card-text class="py-1 white--text">
@@ -26,7 +26,7 @@
             </v-card>
           </td>
           <td
-            v-for="(tableValue, tIndex) in tableData[xIndex]"
+            v-for="(tableValue, tIndex) in tableData[yIndex]"
             :key="tIndex"
             class="px-1"
           >
