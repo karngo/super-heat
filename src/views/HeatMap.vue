@@ -4,13 +4,21 @@
       <v-col>
         <v-card outlined>
           <v-card-text>
+            <v-card-title>
+              <v-select
+                class="px-2"
+                placeholder="Select an index"
+                :items="indexParameters"
+                v-model="selectedIndex"
+              ></v-select>
+            </v-card-title>
             <v-simple-table>
               <template v-slot:default>
                 <thead>
                   <tr>
                     <th>Managers</th>
-                    <th v-for="(indexParameter, i) in indexParameters" :key="i">
-                      {{ indexParameter }}
+                    <th v-for="(scoreParameter, i) in scoreParameters" :key="i">
+                      {{ scoreParameter }}
                     </th>
                   </tr>
                 </thead>
@@ -40,8 +48,18 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "HeatMap",
+  data() {
+    return {
+      selectedIndex: "",
+    };
+  },
   computed: {
-    ...mapGetters(["indexParameters", "managers", "indexScores"]),
+    ...mapGetters([
+      "indexParameters",
+      "managers",
+      "indexScores",
+      "getTopicParameters",
+    ]),
     managerIndexScores() {
       const managerScores = this.managers.map((manager) => {
         const scores = this.indexParameters.map((indexParamter) => {
@@ -58,6 +76,14 @@ export default {
       });
 
       return managerScores;
+    },
+    scoreParameters() {
+      if (!this.selectedIndex) {
+        return this.indexParameters;
+      }
+
+      const topicParameters = this.getTopicParameters(this.selectedIndex);
+      return topicParameters;
     },
   },
 };

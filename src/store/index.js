@@ -37,6 +37,23 @@ export default new Vuex.Store({
       const scores = getters.indexScores;
       return uniq(scores.map(({ manager }) => manager));
     },
+    getTopicParameters: (state, getters) => (indexParameter) => {
+      if (!getters.indexParameters.includes(indexParameter)) {
+        return [];
+      }
+
+      const statDefinitions = state?.managerStats?.definitions || [];
+
+      if (!Array.isArray(statDefinitions)) {
+        return [];
+      }
+
+      const topics = statDefinitions
+        .filter(({ index }) => index == indexParameter)
+        .map(({ topic }) => topic);
+
+      return topics;
+    },
   },
   mutations: {},
   actions: {},
