@@ -67,6 +67,7 @@ export default {
       "indexScores",
       "getTopicParameters",
       "getTopicScores",
+      "getSubTopics",
     ]),
     managerIndexScores() {
       const managerScores = this.managers.map((manager) => {
@@ -90,7 +91,11 @@ export default {
         return this.indexParameters;
       }
 
-      return this.topicParameters;
+      if (!this.selectedTopic) {
+        return this.topicParameters;
+      }
+
+      return this.subTopicParameters;
     },
     managerScores() {
       if (!this.selectedIndex) {
@@ -124,6 +129,13 @@ export default {
 
       const topicParameters = this.getTopicParameters(this.selectedIndex);
       return topicParameters;
+    },
+    subTopicParameters() {
+      if (!this.selectedTopic) {
+        return [];
+      }
+
+      return this.getSubTopics(this.selectedIndex, this.selectedTopic);
     },
   },
 };

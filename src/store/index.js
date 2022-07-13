@@ -54,6 +54,29 @@ export default new Vuex.Store({
 
       return topics;
     },
+    getSubTopics: (state, getters) => (indexParameter, topicParameter) => {
+      const topics = getters.getTopicParameters(indexParameter);
+      if (!topics.length) {
+        return [];
+      }
+
+      if (!topics.includes(topicParameter)) {
+        return [];
+      }
+
+      const statDefinitions = state?.managerStats?.definitions || [];
+
+      if (!Array.isArray(statDefinitions)) {
+        return [];
+      }
+
+      const subTopics = statDefinitions
+        .filter(({ index }) => index == indexParameter)
+        .filter(({ topic }) => topic == topicParameter)
+        .map(({ subTopic }) => subTopic);
+
+      return subTopics;
+    },
     getTopicScores: (state, getters) => (indexParamter) => {
       if (!getters.indexParameters.includes(indexParamter)) {
         return [];
