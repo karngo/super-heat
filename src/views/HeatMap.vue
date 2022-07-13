@@ -5,20 +5,33 @@
         <v-card outlined>
           <v-card-text>
             <v-card-title>
-              <v-select
-                class="px-2"
-                placeholder="Select an index"
-                :items="indexParameters"
-                v-model="selectedIndex"
-                @change="selectedTopic = ''"
-              ></v-select>
-              <v-select
-                class="px-2"
-                placeholder="Select a Topic"
-                :items="topicParameters"
-                v-model="selectedTopic"
-                :disabled="!selectedIndex"
-              ></v-select>
+              <v-container class="pa-0">
+                <v-row>
+                  <v-col class="pa-0" cols="12" sm="4">
+                    <v-select
+                      class="px-2 rounded-0"
+                      placeholder="Select an index"
+                      :items="indexParameters"
+                      v-model="selectedIndex"
+                      @change="selectedTopic = ''"
+                      outlined
+                      dense
+                      prepend-inner-icon="mdi-bullseye"
+                    ></v-select>
+                  </v-col>
+                  <v-col class="pa-0" cols="12" sm="4">
+                    <v-select
+                      class="px-2 rounded-lg"
+                      placeholder="Select a Topic"
+                      :items="topicParameters"
+                      v-model="selectedTopic"
+                      :disabled="!selectedIndex"
+                      outlined
+                      dense
+                    ></v-select>
+                  </v-col>
+                </v-row>
+              </v-container>
             </v-card-title>
             <v-simple-table class="heatmap">
               <template v-slot:default>
