@@ -10,6 +10,7 @@
                 placeholder="Select an index"
                 :items="indexParameters"
                 v-model="selectedIndex"
+                @change="selectedTopic = ''"
               ></v-select>
               <v-select
                 class="px-2"
