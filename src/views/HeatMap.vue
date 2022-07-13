@@ -11,6 +11,12 @@
                 :items="indexParameters"
                 v-model="selectedIndex"
               ></v-select>
+              <v-select
+                class="px-2"
+                placeholder="Select a Topic"
+                :items="topicParameters"
+                v-model="selectedTopic"
+              ></v-select>
             </v-card-title>
             <v-simple-table>
               <template v-slot:default>
@@ -51,6 +57,7 @@ export default {
   data() {
     return {
       selectedIndex: "",
+      selectedTopic: "",
     };
   },
   computed: {
@@ -83,8 +90,7 @@ export default {
         return this.indexParameters;
       }
 
-      const topicParameters = this.getTopicParameters(this.selectedIndex);
-      return topicParameters;
+      return this.topicParameters;
     },
     managerScores() {
       if (!this.selectedIndex) {
@@ -110,6 +116,14 @@ export default {
       });
 
       return managerTopicScores;
+    },
+    topicParameters() {
+      if (!this.selectedIndex) {
+        return [];
+      }
+
+      const topicParameters = this.getTopicParameters(this.selectedIndex);
+      return topicParameters;
     },
   },
 };
