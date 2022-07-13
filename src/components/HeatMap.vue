@@ -41,11 +41,34 @@
             </v-card>
           </td>
         </tr>
+        <tr>
+          <td>
+            <v-card outlined class="text-center grey darken-3">
+              <v-card-text class="py-1 white--text"> Aggregate </v-card-text>
+            </v-card>
+          </td>
+          <td
+            v-for="(aggregate, aIndex) in aggregates"
+            :key="aIndex"
+            class="px-1"
+          >
+            <v-card
+              outlined
+              class="text-center"
+              :color="getHeatColor(aggregate)"
+            >
+              <v-card-text class="pa-1">
+                {{ aggregate }}
+              </v-card-text>
+            </v-card>
+          </td>
+        </tr>
       </tbody>
     </template>
   </v-simple-table>
 </template>
 <script>
+import { sumBy } from "lodash";
 export default {
   name: "HeatMap",
   props: {
@@ -63,6 +86,19 @@ export default {
       },
     },
     tableData: Array,
+  },
+  computed: {
+    aggregates() {
+      const xValues = this.xValues;
+      const aggregates = xValues
+        .map((value, index) => {
+          const columnValues = this.tableData[index];
+          return sumBy(columnValues, (value) => value * 1) / xValues.length;
+        })
+        .map((aggregate) => Math.floor(aggregate));
+
+      return aggregates;
+    },
   },
   methods: {
     getHeatColor(value) {
