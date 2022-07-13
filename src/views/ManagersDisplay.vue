@@ -41,7 +41,7 @@
               </v-container>
             </v-card-title>
             <HeatMap
-              :yAxis="{ title: 'Managers', icon: 'mdi-bullseye' }"
+              :yAxis="{ title: 'Managers', icon: 'mdi-account' }"
               :yValues="managers"
               :xValues="scoreParameters"
               :tableData="managerScores"
