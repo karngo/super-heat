@@ -24,25 +24,21 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th>
-                      <v-card outlined class="text-center">
-                        <v-card-text class="py-1"> Managers </v-card-text>
-                      </v-card>
-                    </th>
-                    <th v-for="(scoreParameter, i) in scoreParameters" :key="i">
-                      <v-card outlined class="text-center">
-                        <v-card-text class="py-1">
-                          {{ scoreParameter }}
-                        </v-card-text>
-                      </v-card>
+                    <th class="text-center">Managers</th>
+                    <th
+                      v-for="(scoreParameter, i) in scoreParameters"
+                      :key="i"
+                      class="text-center"
+                    >
+                      {{ scoreParameter }}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(manager, mIndex) in managers" :key="mIndex">
                     <td>
-                      <v-card outlined class="text-center">
-                        <v-card-text class="py-1">
+                      <v-card outlined class="text-center grey darken-3">
+                        <v-card-text class="py-1 white--text">
                           {{ manager }}
                         </v-card-text>
                       </v-card>
