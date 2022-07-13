@@ -24,22 +24,43 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th>Managers</th>
+                    <th>
+                      <v-card outlined class="text-center">
+                        <v-card-text class="py-1"> Managers </v-card-text>
+                      </v-card>
+                    </th>
                     <th v-for="(scoreParameter, i) in scoreParameters" :key="i">
-                      {{ scoreParameter }}
+                      <v-card outlined class="text-center">
+                        <v-card-text class="py-1">
+                          {{ scoreParameter }}
+                        </v-card-text>
+                      </v-card>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="(manager, mIndex) in managers" :key="mIndex">
                     <td>
-                      {{ manager }}
+                      <v-card outlined class="text-center">
+                        <v-card-text class="py-1">
+                          {{ manager }}
+                        </v-card-text>
+                      </v-card>
                     </td>
                     <td
                       v-for="(score, sIndex) in managerScores[mIndex]"
                       :key="sIndex"
+                      class="px-1"
                     >
-                      {{ score }}
+                      <v-card
+                        outlined
+                        class="text-center"
+                        :color="getHeatColor(score)"
+                      >
+                        <v-card-text class="pa-1">
+                          {{ score }}
+                        </v-card-text>
+                      </v-card>
                     </td>
                   </tr>
                 </tbody>
@@ -124,6 +145,11 @@ export default {
       });
 
       return managerScores;
+    },
+    getHeatColor(score) {
+      if (score * 1 < 2) return "error";
+      if (score * 1 < 4) return "warning";
+      return "success";
     },
   },
 };
