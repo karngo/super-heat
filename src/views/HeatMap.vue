@@ -16,6 +16,7 @@
                 placeholder="Select a Topic"
                 :items="topicParameters"
                 v-model="selectedTopic"
+                :disabled="!selectedIndex"
               ></v-select>
             </v-card-title>
             <v-simple-table>
