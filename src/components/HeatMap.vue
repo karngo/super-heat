@@ -19,8 +19,8 @@
       <tbody>
         <tr v-for="(yValue, yIndex) in yValues" :key="yIndex">
           <td>
-            <v-card outlined class="text-center grey darken-3">
-              <v-card-text class="py-1 white--text">
+            <v-card flat class="text-center yvalue">
+              <v-card-text class="py-1 black--text grey lighten-2">
                 {{ yValue }}
               </v-card-text>
             </v-card>
@@ -30,12 +30,8 @@
             :key="tIndex"
             class="px-1"
           >
-            <v-card
-              outlined
-              class="text-center"
-              :color="getHeatColor(tableValue)"
-            >
-              <v-card-text class="pa-1">
+            <v-card flat class="text-center" :class="getStyleClass(tableValue)">
+              <v-card-text class="pa-1 tabletext">
                 {{ tableValue }}
               </v-card-text>
             </v-card>
@@ -44,7 +40,10 @@
         <tr>
           <td>
             <v-card outlined class="text-center grey darken-3">
-              <v-card-text class="py-1 white--text"> Aggregate </v-card-text>
+              <v-card-text class="py-1 white--text">
+                <v-icon color="white">mdi-bookmark-plus</v-icon>
+                Aggregate
+              </v-card-text>
             </v-card>
           </td>
           <td
@@ -53,9 +52,9 @@
             class="px-1"
           >
             <v-card
-              outlined
+              flat
               class="text-center"
-              :color="getHeatColor(aggregate)"
+              :class="getAggregateStyles(aggregate)"
             >
               <v-card-text class="pa-1">
                 {{ aggregate }}
@@ -101,18 +100,50 @@ export default {
     },
   },
   methods: {
-    getHeatColor(value) {
+    getAggregateStyles(value) {
       if (value * 1 < 2) return "error";
       if (value * 1 < 4) return "warning";
       return "success";
+    },
+    getStyleClass(value) {
+      if (value * 1 < 2) return "error-border";
+      if (value * 1 < 4) return "warning-border";
+      return "success-border";
     },
   },
 };
 </script>
 <style lang="scss" scoped>
 .heatmap ::v-deep {
-  tbody tr td:first-child {
-    width: 20%;
+  tbody tr {
+    td {
+      .success-border {
+        border: solid var(--v-success-base) thin;
+        .tabletext {
+          background: var(--v-success-lighten4);
+        }
+      }
+      .warning-border {
+        border: solid var(--v-warning-base) thin;
+        .tabletext {
+          background: var(--v-warning-lighten4);
+        }
+      }
+      .error-border {
+        border: solid var(--v-error-base) thin;
+        .tabletext {
+          background: var(--v-error-lighten4);
+        }
+      }
+    }
+
+    td:first-child {
+      width: 20%;
+
+      .yvalue {
+        border: solid rgb(24, 24, 24) thin;
+      }
+    }
   }
 }
 </style>
