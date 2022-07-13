@@ -21,6 +21,22 @@ export default new Vuex.Store({
 
       return indices;
     },
+    indexScores(state, getters) {
+      const indexParameters = getters.indexParameters;
+      const statData = state?.managerStats?.data || [];
+
+      if (!Array.isArray(statData) || !indexParameters.length) {
+        return [];
+      }
+
+      return statData.filter(({ parameter }) =>
+        indexParameters.includes(parameter)
+      );
+    },
+    managers(state, getters) {
+      const scores = getters.indexScores;
+      return uniq(scores.map(({ manager }) => manager));
+    },
   },
   mutations: {},
   actions: {},

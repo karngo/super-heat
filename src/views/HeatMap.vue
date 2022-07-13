@@ -14,6 +14,13 @@
                     </th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr v-for="(manager, mIndex) in managers" :key="mIndex">
+                    <td>
+                      {{ manager }}
+                    </td>
+                  </tr>
+                </tbody>
               </template>
             </v-simple-table>
           </v-card-text>
@@ -24,10 +31,11 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+
 export default {
   name: "HeatMap",
   computed: {
-    ...mapGetters(["indexParameters"]),
+    ...mapGetters(["indexParameters", "managers"]),
   },
 };
 </script>
