@@ -54,6 +54,20 @@ export default new Vuex.Store({
 
       return topics;
     },
+    getTopicScores: (state, getters) => (indexParamter) => {
+      if (!getters.indexParameters.includes(indexParamter)) {
+        return [];
+      }
+
+      const topics = getters.getTopicParameters(indexParamter);
+      const statData = state?.managerStats?.data || [];
+
+      if (!Array.isArray(statData)) {
+        return [];
+      }
+
+      return statData.filter(({ parameter }) => topics.includes(parameter));
+    },
   },
   mutations: {},
   actions: {},

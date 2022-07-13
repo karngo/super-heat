@@ -28,7 +28,7 @@
                       {{ manager }}
                     </td>
                     <td
-                      v-for="(score, sIndex) in managerIndexScores[mIndex]"
+                      v-for="(score, sIndex) in managerScores[mIndex]"
                       :key="sIndex"
                     >
                       {{ score }}
@@ -59,6 +59,7 @@ export default {
       "managers",
       "indexScores",
       "getTopicParameters",
+      "getTopicScores",
     ]),
     managerIndexScores() {
       const managerScores = this.managers.map((manager) => {
@@ -84,6 +85,31 @@ export default {
 
       const topicParameters = this.getTopicParameters(this.selectedIndex);
       return topicParameters;
+    },
+    managerScores() {
+      if (!this.selectedIndex) {
+        return this.managerIndexScores;
+      }
+      return this.managerTopicScores;
+    },
+    managerTopicScores() {
+      const topicScores = this.getTopicScores(this.selectedIndex);
+
+      const managerTopicScores = this.managers.map((manager) => {
+        const scores = this.scoreParameters.map((scoreParameter) => {
+          const scoreData = topicScores.find(
+            (topicScore) =>
+              topicScore.manager == manager &&
+              topicScore.parameter == scoreParameter
+          );
+
+          return scoreData?.score || 0;
+        });
+
+        return scores;
+      });
+
+      return managerTopicScores;
     },
   },
 };
