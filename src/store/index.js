@@ -91,6 +91,16 @@ export default new Vuex.Store({
 
       return statData.filter(({ parameter }) => topics.includes(parameter));
     },
+    getSubTopicScores: (state, getters) => (indexParameter, topicParameter) => {
+      const subTopics = getters.getSubTopics(indexParameter, topicParameter);
+      const statData = state?.managerStats?.data || [];
+
+      if (!Array.isArray(statData)) {
+        return [];
+      }
+
+      return statData.filter(({ parameter }) => subTopics.includes(parameter));
+    },
   },
   mutations: {},
   actions: {},
