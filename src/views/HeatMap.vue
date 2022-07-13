@@ -13,7 +13,7 @@
                   <v-col class="pa-0" cols="12" sm="4">
                     <v-select
                       class="px-2 rounded-0"
-                      placeholder="Select an index"
+                      placeholder="Select an Index"
                       :items="indexParameters"
                       v-model="selectedIndex"
                       @change="selectedTopic = ''"
@@ -21,18 +21,20 @@
                       dense
                       clearable
                       prepend-inner-icon="mdi-bullseye"
+                      :menu-props="{ 'offset-y': true }"
                     ></v-select>
                   </v-col>
                   <v-col class="pa-0" cols="12" sm="4">
                     <v-select
                       class="px-2 rounded-lg"
-                      placeholder="Select a Topic"
+                      :placeholder="selectedIndex ? 'Select a Topic' : 'None'"
                       :items="topicParameters"
                       v-model="selectedTopic"
                       :disabled="!selectedIndex"
                       outlined
                       dense
                       clearable
+                      :menu-props="{ 'offset-y': true }"
                     ></v-select>
                   </v-col>
                 </v-row>
@@ -42,7 +44,10 @@
               <template v-slot:default>
                 <thead>
                   <tr>
-                    <th class="text-center">Managers</th>
+                    <th class="text-center">
+                      <v-icon dense>mdi-account</v-icon>
+                      Managers
+                    </th>
                     <th
                       v-for="(scoreParameter, i) in scoreParameters"
                       :key="i"
