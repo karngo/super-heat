@@ -19,6 +19,12 @@
                     <td>
                       {{ manager }}
                     </td>
+                    <td
+                      v-for="(score, sIndex) in managerIndexScores[mIndex]"
+                      :key="sIndex"
+                    >
+                      {{ score }}
+                    </td>
                   </tr>
                 </tbody>
               </template>
@@ -35,7 +41,24 @@ import { mapGetters } from "vuex";
 export default {
   name: "HeatMap",
   computed: {
-    ...mapGetters(["indexParameters", "managers"]),
+    ...mapGetters(["indexParameters", "managers", "indexScores"]),
+    managerIndexScores() {
+      const managerScores = this.managers.map((manager) => {
+        const scores = this.indexParameters.map((indexParamter) => {
+          const scoreData = this.indexScores.find(
+            (indexScore) =>
+              indexScore.manager == manager &&
+              indexScore.parameter == indexParamter
+          );
+
+          return scoreData?.score || 0;
+        });
+
+        return scores;
+      });
+
+      return managerScores;
+    },
   },
 };
 </script>
