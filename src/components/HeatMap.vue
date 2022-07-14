@@ -117,7 +117,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.heatmap ::v-deep {
+.heatmap {
   tbody tr {
     td {
       .success-border {
