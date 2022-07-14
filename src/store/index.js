@@ -37,7 +37,7 @@ export default new Vuex.Store({
 
       return subTopics;
     },
-    getParameterScores: (state) => (inputParameter) => {
+    getManagerData: (state) => (inputParameter) => {
       const managerStatData = state?.managerStats?.data || [];
 
       if (!Array.isArray(managerStatData)) {
@@ -45,23 +45,23 @@ export default new Vuex.Store({
       }
 
       if (Array.isArray(inputParameter)) {
-        const scores = managerStatData.filter(({ parameter }) =>
+        const managerData = managerStatData.filter(({ parameter }) =>
           inputParameter.includes(parameter)
         );
 
-        return scores;
+        return managerData;
       }
 
-      const scores = managerStatData.filter(
+      const managerData = managerStatData.filter(
         ({ parameter }) => inputParameter == parameter
       );
 
-      return scores;
+      return managerData;
     },
     managers(state, getters) {
       const indexParameters = getters.getParameters();
-      const scores = getters.getParameterScores(indexParameters);
-      return uniq(scores.map(({ manager }) => manager));
+      const managerData = getters.getManagerData(indexParameters);
+      return uniq(managerData.map(({ manager }) => manager));
     },
   },
   mutations: {

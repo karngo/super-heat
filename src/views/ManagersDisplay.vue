@@ -67,7 +67,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getParameters", "getParameterScores", "managers"]),
+    ...mapGetters(["getParameters", "getManagerData", "managers"]),
     indexParameters() {
       return this.getParameters();
     },
@@ -111,17 +111,15 @@ export default {
   },
   methods: {
     getManagerScores(parameters) {
-      const parameterScores = this.getParameterScores(parameters);
+      const managerData = this.getManagerData(parameters);
 
       const managerScores = this.managers.map((manager) => {
         const scores = parameters.map((parameter) => {
-          const scoreData = parameterScores.find(
-            (parameterScore) =>
-              parameterScore.manager == manager &&
-              parameterScore.parameter == parameter
+          const dataValue = managerData.find(
+            (data) => data.manager == manager && data.parameter == parameter
           );
 
-          return scoreData?.score || 0;
+          return dataValue?.score || 0;
         });
 
         return scores;
