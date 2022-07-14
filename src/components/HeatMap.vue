@@ -89,10 +89,13 @@ export default {
   computed: {
     aggregates() {
       const xValues = this.xValues;
+
       const aggregates = xValues
         .map((value, index) => {
-          const columnValues = this.tableData[index];
-          return sumBy(columnValues, (value) => value * 1) / xValues.length;
+          const columnValues = this.tableData.map((row) => row[index]);
+          return (
+            sumBy(columnValues, (value) => value * 1) / columnValues.length
+          );
         })
         .map((aggregate) => Math.floor(aggregate));
 
