@@ -4,15 +4,23 @@
       <thead>
         <tr>
           <th class="text-center">
-            <v-icon dense>{{ yAxis.icon }}</v-icon>
-            {{ yAxis.title }}
+            <v-card flat class="text-center">
+              <v-card-text class="py-2 black--text grey">
+                <v-icon dense>{{ yAxis.icon }}</v-icon>
+                {{ yAxis.title }}
+              </v-card-text>
+            </v-card>
           </th>
           <th
             v-for="(xValue, xIndex) in xValues"
             :key="xIndex"
-            class="text-center"
+            class="text-center px-1"
           >
-            {{ xValue }}
+            <v-card flat class="text-center">
+              <v-card-text class="py-2 black--text grey">
+                {{ xValue }}
+              </v-card-text>
+            </v-card>
           </th>
         </tr>
       </thead>
