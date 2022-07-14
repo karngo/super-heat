@@ -11,26 +11,26 @@ export default new Vuex.Store({
   },
   getters: {
     getParameters: (state) => (indexParameter, topicParameter) => {
-      const statDefinitions = state?.managerStats?.definitions || [];
+      const managerStatDefinitions = state?.managerStats?.definitions || [];
 
-      if (!Array.isArray(statDefinitions)) {
+      if (!Array.isArray(managerStatDefinitions)) {
         return [];
       }
 
       if (!indexParameter) {
-        const indices = uniq(statDefinitions.map(({ index }) => index));
+        const indices = uniq(managerStatDefinitions.map(({ index }) => index));
         return indices;
       }
 
       if (!topicParameter) {
-        const topics = statDefinitions
+        const topics = managerStatDefinitions
           .filter(({ index }) => index == indexParameter)
           .map(({ topic }) => topic);
 
         return topics;
       }
 
-      const subTopics = statDefinitions
+      const subTopics = managerStatDefinitions
         .filter(({ index }) => index == indexParameter)
         .filter(({ topic }) => topic == topicParameter)
         .map(({ subTopic }) => subTopic);
@@ -38,21 +38,21 @@ export default new Vuex.Store({
       return subTopics;
     },
     getParameterScores: (state) => (inputParameter) => {
-      const statData = state?.managerStats?.data || [];
+      const managerStatData = state?.managerStats?.data || [];
 
-      if (!Array.isArray(statData)) {
+      if (!Array.isArray(managerStatData)) {
         return [];
       }
 
       if (Array.isArray(inputParameter)) {
-        const scores = statData.filter(({ parameter }) =>
+        const scores = managerStatData.filter(({ parameter }) =>
           inputParameter.includes(parameter)
         );
 
         return scores;
       }
 
-      const scores = statData.filter(
+      const scores = managerStatData.filter(
         ({ parameter }) => inputParameter == parameter
       );
 
@@ -65,8 +65,8 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    updateManagerStats(state, stats) {
-      state.managerStats = stats;
+    updateManagerStats(state, managerStats) {
+      state.managerStats = managerStats;
     },
   },
   actions: {
