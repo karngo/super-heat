@@ -37,23 +37,23 @@ export default new Vuex.Store({
 
       return subTopics;
     },
-    getParameterScores: (state) => (parameters) => {
+    getParameterScores: (state) => (inputParameter) => {
       const statData = state?.managerStats?.data || [];
 
       if (!Array.isArray(statData)) {
         return [];
       }
 
-      if (Array.isArray(parameters)) {
+      if (Array.isArray(inputParameter)) {
         const scores = statData.filter(({ parameter }) =>
-          parameters.includes(parameter)
+          inputParameter.includes(parameter)
         );
 
         return scores;
       }
 
       const scores = statData.filter(
-        ({ parameter }) => parameters == parameter
+        ({ parameter }) => inputParameter == parameter
       );
 
       return scores;
